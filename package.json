@@ -1,0 +1,11 @@
+{
+  "name": "astrofixxer",
+  "version": "1.0.0",
+  "description": "Web Application for Sky Navigation",
+  "main": "astrofixxer.html",
+  "scripts": {
+    "build": "python3 create_data_minimal.py"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

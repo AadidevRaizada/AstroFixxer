@@ -1,11 +1,6 @@
 {
-  "git": {
-    "deploymentEnabled": {
-      "main": true
-    },
-    "submodules": true
-  },
-  "buildCommand": "python3 create_data.py && python3 po/tojson.py",
+  "buildCommand": "python3 create_data_minimal.py",
+  "outputDirectory": ".",
   "headers": [
     {
       "source": "/(.*)\.js",
