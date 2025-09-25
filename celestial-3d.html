@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3D Celestial Viewer</title>
+    <style>
+        body { margin: 0; background: black; overflow: hidden; }
+        #info { position: absolute; top: 10px; left: 10px; color: white; font-family: Arial; }
+    </style>
+</head>
+<body>
+    <div id="info">3D Celestial Navigation - Use mouse to rotate, wheel to zoom</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let stars = [], planets = [];
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // Add stars
+            createStars();
+            
+            // Add planets
+            createPlanets();
+
+            // Camera position
+            camera.position.z = 5;
+
+            // Mouse controls
+            addControls();
+
+            animate();
+        }
+
+        function createStars() {
+            const starGeometry = new THREE.SphereGeometry(0.02, 8, 8);
+            const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+            // Major stars with approximate positions
+            const majorStars = [
+                { name: 'Sirius', ra: 101.287, dec: -16.716, mag: -1.46 },
+                { name: 'Canopus', ra: 95.988, dec: -52.696, mag: -0.74 },
+                { name: 'Arcturus', ra: 213.915, dec: 19.182, mag: -0.05 },
+                { name: 'Vega', ra: 279.234, dec: 38.784, mag: 0.03 },
+                { name: 'Capella', ra: 79.172, dec: 45.998, mag: 0.08 }
+            ];
+
+            majorStars.forEach(star => {
+                const starMesh = new THREE.Mesh(starGeometry, starMaterial);
+                const pos = raDecToCartesian(star.ra, star.dec, 10);
+                starMesh.position.set(pos.x, pos.y, pos.z);
+                starMesh.userData = { name: star.name, type: 'star' };
+                scene.add(starMesh);
+                stars.push(starMesh);
+            });
+        }
+
+        function createPlanets() {
+            const planetData = [
+                { name: 'Mars', color: 0xff4444, size: 0.05 },
+                { name: 'Jupiter', color: 0xffaa44, size: 0.08 },
+                { name: 'Saturn', color: 0xffff88, size: 0.07 },
+                { name: 'Venus', color: 0xffffaa, size: 0.04 }
+            ];
+
+            planetData.forEach((planet, i) => {
+                const geometry = new THREE.SphereGeometry(planet.size, 16, 16);
+                const material = new THREE.MeshBasicMaterial({ color: planet.color });
+                const mesh = new THREE.Mesh(geometry, material);
+                
+                // Random positions for demo
+                const angle = (i / planetData.length) * Math.PI * 2;
+                mesh.position.set(
+                    Math.cos(angle) * 8,
+                    Math.sin(angle) * 2,
+                    Math.sin(angle) * 8
+                );
+                
+                mesh.userData = { name: planet.name, type: 'planet' };
+                scene.add(mesh);
+                planets.push(mesh);
+            });
+        }
+
+        function raDecToCartesian(ra, dec, distance) {
+            const raRad = (ra * Math.PI) / 180;
+            const decRad = (dec * Math.PI) / 180;
+            
+            return {
+                x: distance * Math.cos(decRad) * Math.cos(raRad),
+                y: distance * Math.sin(decRad),
+                z: distance * Math.cos(decRad) * Math.sin(raRad)
+            };
+        }
+
+        function addControls() {
+            let mouseDown = false;
+            let mouseX = 0, mouseY = 0;
+
+            document.addEventListener('mousedown', (e) => {
+                mouseDown = true;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            document.addEventListener('mouseup', () => {
+                mouseDown = false;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!mouseDown) return;
+                
+                const deltaX = e.clientX - mouseX;
+                const deltaY = e.clientY - mouseY;
+                
+                scene.rotation.y += deltaX * 0.01;
+                scene.rotation.x += deltaY * 0.01;
+                
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            document.addEventListener('wheel', (e) => {
+                camera.position.z += e.deltaY * 0.01;
+                camera.position.z = Math.max(1, Math.min(50, camera.position.z));
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate planets
+            planets.forEach((planet, i) => {
+                planet.rotation.y += 0.01 * (i + 1);
+            });
+            
+            renderer.render(scene, camera);
+        }
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        init();
+    </script>
+</body>
+</html>

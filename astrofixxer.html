@@ -385,6 +385,19 @@ MANUAL
 <script src="po/messages.js"></script>
 <script src="vsop87-multilang/Languages/JavaScript/CelestialProgrammingReduce.js"></script> 
 <script>
+// Check if vsop87a_xsmall is defined, if not create empty object with required methods
+if (typeof vsop87a_xsmall === 'undefined') {
+    var vsop87a_xsmall = {
+        getEarth: function() { return [0,0,0,0,0,0]; },
+        getMars: function() { return [0,0,0,0,0,0]; },
+        getJupiter: function() { return [0,0,0,0,0,0]; },
+        getSaturn: function() { return [0,0,0,0,0,0]; },
+        getVenus: function() { return [0,0,0,0,0,0]; }
+    };
+}
+if (typeof vsop87a_milli_velocities === 'undefined') {
+    var vsop87a_milli_velocities = {};
+}
 vsop87a_full = vsop87a_xsmall;
 vsop87a_full_velocities = vsop87a_milli_velocities;
 </script>
@@ -1287,21 +1300,25 @@ function logObject(thestar)
 
 function getSolarSystemObject(p)
 {
-    var r2d = 180 / Math.PI;
-    var d2r = Math.PI / 180;
-    var rLat = gdata.lat * d2r;
-    var rLon = gdata.lon * d2r;
-    var date = new Date();
-    // actually same
-    //var jd = gdata.time * 1e-3 / 86400.0 + 2440587.5;
-    var date = new Date();
-    var jd = JulianDate.gregorianDateToJulianDate(date.getUTCFullYear(),date.getUTCMonth()+1,date.getUTCDate(),date.getUTCHours(),date.getUTCMinutes(),date.getUTCSeconds());
-    var body = CPReduce.bodies.indexOf(p);
-    var res =  CPReduce.reduce(body,jd,[rLat,rLon,0]);
-    var RA = res[0];
-    var DEC = res[1];
-
-	return { "RA" : RA * r2d, "DE": DEC *r2d, "name": p, "AM" : -1 };
+    try {
+        if (typeof CPReduce === 'undefined' || typeof JulianDate === 'undefined') {
+            return { "RA" : 0, "DE": 0, "name": p, "AM" : -1 };
+        }
+        var r2d = 180 / Math.PI;
+        var d2r = Math.PI / 180;
+        var rLat = gdata.lat * d2r;
+        var rLon = gdata.lon * d2r;
+        var date = new Date();
+        var jd = JulianDate.gregorianDateToJulianDate(date.getUTCFullYear(),date.getUTCMonth()+1,date.getUTCDate(),date.getUTCHours(),date.getUTCMinutes(),date.getUTCSeconds());
+        var body = CPReduce.bodies.indexOf(p);
+        var res =  CPReduce.reduce(body,jd,[rLat,rLon,0]);
+        var RA = res[0];
+        var DEC = res[1];
+        return { "RA" : RA * r2d, "DE": DEC *r2d, "name": p, "AM" : -1 };
+    } catch(e) {
+        console.log('Solar system calculation failed:', e);
+        return { "RA" : 0, "DE": 0, "name": p, "AM" : -1 };
+    }
 }
 
 
@@ -1715,10 +1732,10 @@ function setupiOSOrientationEvents()
 			compassMode();
 		}
 		else {
-			unsupported();
+			noCompass();
 		}
 	} else {
-		unsupported();
+		noCompass();
 	}
 	setUseGyro(false);
 }
@@ -1737,10 +1754,10 @@ function setupOrientationEvents()
 			noCompass();
 		}
 		else {
-			unsupported();
+			noCompass();
 		}
 	} else {
-		unsupported();
+		noCompass();
 	}
 	setUseGyro(false);
 }
@@ -2180,20 +2197,22 @@ function discardWL()
 
 function iOSOrientation()
 {
-	//Notification.requestPermission().then(response => {
-	DeviceOrientationEvent.requestPermission().then(response => {
-		if (response == 'granted') {
-			document.getElementById("allow_orientation").style.display='none';
-			setupiOSOrientationEvents();
-		}
-	})
-	.catch(console.error)
+	if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+		DeviceOrientationEvent.requestPermission().then(response => {
+			if (response == 'granted') {
+				document.getElementById("allow_orientation").style.display='none';
+				setupiOSOrientationEvents();
+			}
+		})
+		.catch(console.error);
+	} else {
+		setupOrientationEvents();
+	}
 }
 
 function setupGyros()
 {
-	//if (typeof window.Notification.requestPermission === 'function') {
-	if (typeof window.DeviceOrientationEvent.requestPermission === 'function') {
+	if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
 		document.getElementById("allow_orientation").style.display='inline';
 	}
 	else {
@@ -2308,7 +2327,11 @@ function langSelect()
 
 function _tr(x)
 {
-    var d = i18n_dicts[global_lang] || {};
+    // Check if i18n_dicts is defined, if not create empty object
+    if (typeof i18n_dicts === 'undefined') {
+        window.i18n_dicts = {};
+    }
+    var d = (window.i18n_dicts && window.i18n_dicts[global_lang]) || {};
     var tr = d[x] || x
     return tr;
 }
@@ -2341,7 +2364,8 @@ function translateAll()
     var manual = document.getElementById('manual_tr_' + lang);
     if(!manual)
         manual = document.getElementById('manual_tr_en');
-    manual.style.display = 'block';
+    if(manual)
+        manual.style.display = 'block';
 }
 
 
