@@ -45,10 +45,14 @@ def embed_service_worker(version):
         out.write(content)
 
 def png_encode(path):
-    with open(path,'rb') as f:
-        png = f.read()
-        b64png = base64.b64encode(png).decode()
-    return 'data:image/png;base64,%s' % b64png
+    try:
+        with open(path,'rb') as f:
+            png = f.read()
+            b64png = base64.b64encode(png).decode()
+        return 'data:image/png;base64,%s' % b64png
+    except FileNotFoundError:
+        # Return a minimal 1x1 transparent PNG for missing images
+        return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAI/hRWkOAAAAABJRU5ErkJggg=='
 
 def combine_manuals(mans):
     res = []
