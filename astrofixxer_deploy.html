@@ -1,0 +1,165 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>AstroFixxer - Web Application for Sky Navigation</title>
+<link rel="manifest" href="manifest.json">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+<style>
+body, td { margin:3mm 0 0 0; font-size: 5mm ; color:#00bfff ; font-family: sans; background-color:black }
+a:link {color: #00bfff;}
+a:visited { color: #00bfff; }
+a:active { color:#00bfff; }
+a:hover { color:#00bfff; }
+button { border-radius:2mm; height:10mm; font-size:5mm ; text-align:center; vertical-align: middle; background-color:black; color:#00bfff; border: 2px solid #00bfff }
+.comp_but, .incdec_but { width: 10mm ; height:10mm; font-size:5mm ; padding: 0 }
+.comp_but { float:right }
+.only_tiny { display : none }
+.only_tiny_tr { display : none }
+.only_full { display : inline }
+.only_tiny_b { display : none }
+
+#search_field_main_ok {
+    position:absolute;
+    top:31mm;
+    right:10%;
+    height:10mm;
+    border:0px;
+    margin-left:1mm;
+    display:none;
+    background-color: transparent;
+}
+
+#main_search_button {
+    position:absolute;
+    right:27mm;
+    margin:0;
+    top:3mm;
+}
+
+#search_field_main {
+    position:absolute;
+    right:12mm;
+    top:3mm;
+    margin:0;
+    border-radius:2mm;
+    width:15mm;
+    padding-left:1mm;
+    font-size:66%;
+}
+
+#search_field_main:focus {
+    position:absolute;
+    right:10%;
+    left:10%;
+    top:31mm;
+    padding:0;
+    width:80%;
+    font-size:100%;
+}
+
+
+.first_line_controls {
+    padding:0;
+    margin:1mm 1mm 1mm 1mm;
+}
+
+.manual_background {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACW1BMVEUAAAARAACSAADfAADsAADgAAD/AAD+AADoAAD9AACvAAAUAAAWAADaAACLAAAzAADAAACuAAA9AAAGAAA5AAAtAADwAADlAAAiAAD2AADGAACaAACEAABmAAC0AAAVAADxAADQAAACAADtAADJAAC+AAC2AAALAACjAADMAADiAADeAAC6AADyAACZAAAjAACzAAD4AAD6AAC7AAB3AADYAADrAAABAACeAAC3AAAHAABuAABzAADZAACiAAAMAAAZAAD3AABbAADIAAAIAAClAAAQAACFAADqAABGAAAFAAC4AACqAACpAADmAACCAAAwAACoAAAgAAAYAACbAAAdAACYAACWAABIAABgAAANAAAqAACNAAB+AABDAABrAAAyAACKAAD8AADBAABqAABUAACOAAAKAACmAAAxAACHAADOAABXAABiAAADAACwAAD0AAC1AAA0AACDAADpAABLAABtAACxAADEAADHAADjAAA3AACAAADhAAA/AAB0AABWAADVAADdAACGAADcAADkAADWAADXAACQAAAoAACIAAB5AABhAAC5AAAsAAAaAADCAAApAACVAADnAAAEAABJAABwAABcAABMAAC9AAB8AAA1AAAkAADFAAAOAACnAADUAACfAABOAACJAADRAAAeAACtAABSAADbAADzAABkAAD7AADLAABpAABZAAChAAByAACkAAATAAAJAABlAABoAAB6AABsAAArAABnAACXAABjAAA+AADPAADSAAAvAACRAAA7AAAnAABaAAC/AAAfAAAlAABFAAD////lQCzUAAAAAWJLR0TIHbpXygAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB+UHAwkYBKBvNKAAAAObSURBVFjD7VZnUxRBEH0YGs+AAQUTBgwoZiQoZsWEWcQAZjFx5oh6YM4KRlTMOeeMOf8tX8+eVd5xtcEPlh/squ3tetvv7c5OT88A/+0ftqhq1WvUFImuJSI1xFe7jkd+3XpiLKa+dZcGHgUaBnmNYoOBNPbEb0JGXDxdUzSjb86rhSeBlmQktKJrjTYibRPbibT3JNBBuR3pkhAn0gmdRWp5EkgW6YKuFEhEN5HuKujzQI/tQWpPcOS9gBQdfm+j5dZSu+lfr4Y0kXRkMOyDvvSZbvn9rGnrD9bQAOg0DkRP+kEu+YOHWAJDwWAYshgON2UxwqXASOaO4jU6m26MERiLcfR1XQoMEBk/gfkT69BNMgK10Yl+sjt+DlOnqEBuU7qpyDQTMk0V3QlMZ+qMGLq8fLqZ0IH0xSz62e4E5jB17lStG10P84D5IgtQwHihPnYuhkVMXbxEpA2WMiqElrIfyxgvx4p+adFxLfLsBVaKrMJq/kisIWktsE4kDesZb8jcaOa3aIWtwCaRzSgSScYWJgeAYpFilDDeuiTYGbbZCmwX2QG/riX9gp3ALpHdJvYreY8pcjvbofW7V51O4z5TF7uxP/jywGQLtLF09g900XFr7jSg/4EDB5Fr8bsigf6QHT+JCYf1s+shu7S0tCwIR1kCW3CEjTrHTuAo046BIz0eAp8wfD96RIscsR3BSeaV41R5eUEovkpMKWmNF9gK6BhPR/63csZMyXz7VVnBxLMR8PZG+Bz9eVs+djKltAp64aLuE7EYyttIe4GYSAKtL+kfuAwU8nbFXuCqLsYwLOoaweh52YAuhuv2Ai0j7II3iKXc1OiWyO0Me4GD2g1DoTuE7hp+lk/knj0f95n9IATJY3FLhQl1q3/oIHDT7Ai/m3azBlYjSmX4yEFgbpWNPOG2+ILzosWQ7yCQlaKrMcRyNz62Al3Tw+Bk91isT8Kwp9aNrVaeOQroxvQ84pP9/Lj0JEcBbea3TkR4kKjnnBeOfGAM815GwLXI4/NcCLzil8ZXPQu8du7Hv6ySmW/Cwbd3zTnBlWlXuxiG5Rwn+G6xO4EMvqwoDNN+kFzmjg/wePE+FEniDtvsg1s+eEK9FIrkezup8pA4KqQnjAhQ4KN7geo6Y8UPUxd+Wvq5yacvhV9TFKh0L7BWIljcevcCKOkcTvdN+uaBT3tbWfM3tj/w3RvdWNmPhIqYjzMDz0ou/AH7v/1V+wmVeaCWYxBMfwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMS0wNy0wM1QwOToyNDowNCswMzowMEiqpSUAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjEtMDctMDNUMDk6MjQ6MDQrMDM6MDA59x2ZAAAAAElFTkSuQmCC) no-repeat center center;
+    background-size: 10mm 10mm;
+}
+
+.compass_background {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAANlBMVEUAAAA/AABfAAB/AAAvAAAPAACvAAD/AAAfAACfAADPAABPAABvAADvAADfAACPAAC/AAD////E6hIlAAAAAWJLR0QR4rU9ugAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB+UHAwkYBKBvNKAAAAIZSURBVFjD7VZZlq0gDGQQIqPZ/2ob8dwrYdT3+brzp1BF5oSxP/m/hQuZRWz/AFZCQyFaqFfw3Zwoay4NjD2/zP4OblzxpnLmBYUPEGSjsZLpt39ifLJddg1WMvli6QplwQ6dvqXDBcMWwEyuKANhGlMVwcxfMHMd7AqfGcaHB+AKzxjCMTriEB7kmwrAB0cR3IcqHmNfOYj9A38boM5E9qPEQxADBe5XQy4h7JcQ76sgSg/itwxd52pfBYTi7nFXcjCNz1wvWjsE4o9SGpcGaG0ToImZldDs0R0bDJS1qmoCIDr4TsYiTY9A4QaIM3nHCQAVXymCgZzd7vwyFM8sviSQFM+OuCBQJIplGK4O4mBBUP/aKT5983cEjOJTpfgFQZ1cSPFMl5GvDb4ANOWv2XSnjy+92MuDo4r0GYayf26lhrLT1uoK41D13zIXEdoqT9lP7m8QaEdCWdxtXXAaTSssjWR7FH6Rt4ai2/2bRqXcYSHoT2vkd+Rivy93DXMmQsyjXn1RYjA+Br2S7V4HsHKzn1SKo8GAVSRL8mTNp2XJ4fzaA0xGrxKXhU14ChEQ1wtEHIyVLGa5QKjFANcLhoTXbHoBJxtO3nFwZaSZ7GJpf1suIHkoYTfOPLWIJ3veqSdgk5QuwfHp0iziOQ/vVTVVRRo0UTyEZ4q8HgfMkqeUfQM/Zff4HW8B/fNNm5DwLO82/T/5nfID2aIVhABzxToAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDctMDNUMDk6MjQ6MDQrMDM6MDBIqqUlAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA3LTAzVDA5OjI0OjA0KzAzOjAwOfcdmQAAAABJRU5ErkJggg==) no-repeat center center;
+    background-size: 10mm 10mm;
+}
+
+.wiki_background {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABmFBMVEUAAACyAADnAADfAADSAADRAADaAADoAADgAABYAABnAACqAAAZAADKAADmAADXAABbAABiAADbAADWAADjAACwAAAQAACeAAD/AACiAAAFAAAGAACZAADuAAAVAAD5AABeAAABAAC2AADLAAAbAAACAADFAABXAAAHAADcAAD1AAANAAAqAAB1AACAAAD2AAAhAAA/AABZAAB3AACHAADQAAADAADCAACUAAD6AAAgAAALAADzAABEAAAvAAD7AAAiAACQAABjAAC3AACsAADiAADxAADpAAA1AAD4AAAuAAAWAAA6AAB4AABrAADtAACfAAB8AADGAAASAAAIAAAnAADlAABUAACWAABzAABxAABdAADdAAD8AADNAAAKAABtAABBAADkAAC/AAAMAABCAACzAADBAACGAAAoAAAzAACEAAAeAAAaAABgAACaAACKAACkAAAUAADyAAAJAACJAAAdAACLAAB6AADsAAB+AAAYAAC7AAAOAACTAABJAACcAABpAADUAAAsAAAEAACVAABfAAD////q4dMrAAAAAWJLR0SH+9kLywAAAAd0SU1FB+cGAhY5OjL/N3sAAAGASURBVFjD7ZJXV8JAFISvFEER7DgGwYI19oYNe6/YO/beK4q9/243i+9mefD4sPNyv0zOTG42IZKSkpKS+r+KMRhN5liLNS7eaDWZjAZbgt2RaDYmJiWnWM2paem/NzgzAGQqRK4swO1hThyyc3KJlDx48/XsUFAIFGlQXAK1lM0ylPMbFZVV+t6iGrBxqAFq2air9/HLhka952BHU7M2fbGwtFCCv5W7be0degvYkzs5dIFtn9UdcTN6dH8JpRd9Tg5W9A8MDnFzuHJEdwGN4ufcxoDAeMSbmNSfpyk/ehUNph3ADLdcs3MCBTQPJHFYABY5LC37RApmgljhEA8YVjXwronk2R8NrLOxurEZWWEksCVWsA3saKe563TDwVaw7YnlicwI7tNU4IAOtRWO1GPRghPglM7OiS4uMXt1nSmaJ5cB6kEgxOgGuA0PCRfQHRCu0+BeRfBBPE8eFZZHTk/AcxQF9ILXCIQG36LJ07v944c+v6IqkJKSkpL6e30DxRY0T5OMiBcAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjMtMDYtMDJUMjI6NTc6NTgrMDM6MDBUm8zyAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIzLTA2LTAyVDIyOjU3OjU4KzAzOjAwJcZ0TgAAAABJRU5ErkJggg==) no-repeat center center;
+    background-size: 10mm 10mm;
+}
+
+.search_background {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAA3NCSVQICAjb4U/gAAADAFBMVEUAAAAAADMAAGYAAJkAAMwAAP8AMwAAMzMAM2YAM5kAM8wAM/8AZgAAZjMAZmYAZpkAZswAZv8AmQAAmTMAmWYAmZkAmcwAmf8AzAAAzDMAzGYAzJkAzMwAzP8A/wAA/zMA/2YA/5kA/8wA//8zAAAzADMzAGYzAJkzAMwzAP8zMwAzMzMzM2YzM5kzM8wzM/8zZgAzZjMzZmYzZpkzZswzZv8zmQAzmTMzmWYzmZkzmcwzmf8zzAAzzDMzzGYzzJkzzMwzzP8z/wAz/zMz/2Yz/5kz/8wz//9mAABmADNmAGZmAJlmAMxmAP9mMwBmMzNmM2ZmM5lmM8xmM/9mZgBmZjNmZmZmZplmZsxmZv9mmQBmmTNmmWZmmZlmmcxmmf9mzABmzDNmzGZmzJlmzMxmzP9m/wBm/zNm/2Zm/5lm/8xm//+ZAACZADOZAGaZAJmZAMyZAP+ZMwCZMzOZM2aZM5mZM8yZM/+ZZgCZZjOZZmaZZpmZZsyZZv+ZmQCZmTOZmWaZmZmZmcyZmf+ZzACZzDOZzGaZzJmZzMyZzP+Z/wCZ/zOZ/2aZ/5mZ/8yZ///MAADMADPMAGbMAJnMAMzMAP/MMwDMMzPMM2bMM5nMM8zMM//MZgDMZjPMZmbMZpnMZszMZv/MmQDMmTPMmWbMmZnMmczMmf/MzADMzDPMzGbMzJnMzMzMzP/M/wDM/zPM/2bM/5nM/8zM////AAD/ADP/AGb/AJn/AMz/AP//MwD/MzP/M2b/M5n/M8z/M///ZgD/ZjP/Zmb/Zpn/Zsz/Zv//mQD/mTP/mWb/mZn/mcz/mf//zAD/zDP/zGb/zJn/zMz/zP///wD//zP//2b//5n//8z///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABlenwdAAABAHRSTlP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG8mZagAAAAlwSFlzAAAOxAAADsQBlSsOGwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAyMy0wNi0wMlQyMjo1Nzo1OCswMzowMFSbzPIAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMjMtMDYtMDJUMjI6NTc6NTgrMDM6MDAlxnROAAAA90lEQVRYhe2V3REDIQiELWaLoTyKuQKjcD+5CHNL3pJxnzKRBUTPr7WlpaWlZ0F0GxL5yi7dqjI0fqBcvRe+TL0VrfknQ09YaUKD6Oi/ir+SIYtkMyCNU26S8cBhqZkbIVucFvnaR2RcxdpnWsgm4F5iCmmX5iX2kNYwb35Cp/Jd2srzEP45gc/vOUF6ULZAHGMaYrWZu5w06Vbma4pvEvYGiBchvGzwb5x7EHTep7ifaqBNLwo6GMTbIAmDW4YTK6DZ0BlwheLgS8kvM8uk4keDvpPN2MYS9mCYDLR6joFXmq5vDNzhboDnqXY/ahjeafPS0tJP6wUb8H4llAlRwgAAAABJRU5ErkJggg==) no-repeat center center;
+    background-size: 10mm 10mm;
+}
+
+.nocompass_background {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAANlBMVEUAAAA/AABfAAB/AAAvAAAPAACvAAD/AAAfAACfAADPAABPAABvAADvAADfAACPAAC/AAD////E6hIlAAAAAWJLR0QR4rU9ugAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB+UHAwkYBKBvNKAAAAIKSURBVFjD7VbZdoQgDGURIqv5/68tMnUECaDz1NM2bzPkxiw3C2P/8ruFC5lFLB+AldBQiBbqEXw1O8qalwfG7r/M+gxuXPFN5cwDEz5AkI3HSqa//Z3gU+ySDFjJlItpKpQF2036kh4nFpYAZqCiDIRhTVUEM/6CGftgZ/hsof+4Ac7wjCFsvScO4QbfVADeeYrgDlNx6+fKQaQf/BmA2onse8RDEB0Hzq+G3EJItxCnXRBlBvHdho5QpV1AKHS3s5ODaXLmqGqtEKp8lNKkNEAbmwBdhXmRmj2aiMFA2avqagAqHzzBWKzpEWq4gSqZnEgCwMVeKYKBHGnDp/JzDBBRrW8eLd+/+UCb+qvGp07xEwNXcmGNZ7qsvKpoS/KAvXbTSR9fdiDFg+1SabnjC6eW0kNJjLVrh3G4zN+Siwhtlyf2V/oLhHoioSx02xTsQdcdllay3Yq8yNNDQU7/ZlApt1kI+hiN/KxcpOcyGZgzEWJe9eqNEp310ZmVbPU6gJWLPagUe4sBL5UsjadojpElu/trDTBYvUq8ImzKU4iAOD8gYmetZDHTA0JNFrieWEh4zYYKOLhw8o2DsyDN4BZL99v0AMlLCck68zQi7tx5u5+ADSldguPdo1nEfR+ep2rqirRoorgJzybyeRwwS95S9gl8l9Xje70F9Pcv7coIz/Ls0v+Xvylfdc8Yh8gZ4gcAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjEtMDctMDNUMDk6MjQ6MDQrMDM6MDBIqqUlAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDIxLTA3LTAzVDA5OjI0OjA0KzAzOjAwOfcdmQAAAABJRU5ErkJggg==) no-repeat center center;
+    background-size: 10mm 10mm;
+}
+
+.settings_background {
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAB2lBMVEUAAABxAADRAADcAADSAAB6AACxAAD/AAC8AAA4AAALAADVAADgAAAJAAA6AAAEAACLAAD9AAC9AAAIAAABAAD2AAAGAAC2AAD+AACRAAAFAAAMAAC3AAC1AABUAABdAAADAACtAAAOAAA2AAC0AACpAAD5AACqAAA9AACrAACzAAAkAAD6AADZAADYAAAsAACjAADrAAB1AAAfAAAdAAByAADqAACsAAAwAAD0AACeAAANAACaAAD1AAA0AAAjAABaAAAHAADXAAB2AADdAAAKAAAqAABYAAAoAACVAAD4AADhAACMAACIAADiAADuAADIAAACAADEAADzAAA+AAA5AAA8AABBAAA7AACyAAA/AADKAADwAABHAABzAADkAACFAABLAAD7AAD8AABSAAB+AADmAABWAADlAABQAAAPAAAUAAA3AAAWAAAQAABXAACnAACwAABRAABjAABqAADfAACHAADCAADHAACAAABuAADTAABiAADNAABfAAAcAABDAADeAAC6AACUAACmAAC4AADpAACEAAC7AACBAAAbAAARAADoAAAVAAATAADsAADyAAAtAAArAADxAAAuAADLAAC5AAChAABCAACvAABVAAAxAAAzAAD////IOya7AAAAAWJLR0SdBrvysQAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0SU1FB+UHAwkYBKBvNKAAAAJiSURBVFjD7VXrX0xBGB4lk9bpdHbX7tZKZ1NtCUmFotiyUkgrREtUhGJZUpJco4vIpdz/WO/MO79DW7+dOfXReT7sPO/leZp5d3YixIEDB/8FNmRkbsxaj8EmSmn2mpSbc/jiAoMtnGm5duR6nuH2wOrdCgaGD5jPH8gvUNYHt4GusIDkbKcMRUFihmB1F6sa7OC6ktIyiigLh/harryFCroadqrPoHKX0Ox2h7P3CG5U2ZjiXqao3lfDg9q6/Sw8YEN/sB4EDX9ndugwxI1NStojR6v0SDP0tyxL10HmWFQ/3npCZtBGaftJ6D6Vkj8NuY522JdEb57BiXXGUgqxs1jo8qU3aBIjP7eicl5ULqQ36MYdZIjw4iVXYY/gcV65fEVyhmDvVWi7hkFfP/CB6xjcAD7YonCdPdB4E2km/6O3cB63gQ7J5YQMQSNue1gcG+/THWB3VQw0y0Dr5/pAwppiQkGvF0HjPeT3uUESgwdAH0rfBM/II6YZxSgxBvzxMAbjrNDxJJreoBVPPSFCb8/Tbq/gk1h6lt7guZjbixWVclGplJzBhW2Tekre7MTCS9kQsmj1K/YavE7J50Nu6s1bOi0zKK6Fjxnonl2WZtdwDKYx905mwDE3D/3h91b8gX2fCzVKWkQpO+7H6U88+Dz+5Z/roIRFQ4x8fulrfFDwgNqTxuFf9VlX/yeZy/srGrqEsv7bFF+/qxpoP6A7ZBJfH9f9jJAYm2JJVNWAxGYH/Ozt8zayB4X9gPSkMWramCL5pfFlwrp7kd925BaSYDCzJqXASLx5qXc9Bg4cOFDGHw5bVkqmCrH9AAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIxLTA3LTAzVDA5OjI0OjA0KzAzOjAwSKqlJQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMS0wNy0wM1QwOToyNDowNCswMzowMDn3HZkAAAAASUVORK5CYII=) no-repeat center center;
+    background-size: 10mm 10mm;
+}
+
+
+input[type=text], input[type=text]:focus, textarea, input[type=submit], input[type=number] {
+	border: 2px solid #00bfff;
+	color:#00bfff;
+	background-color:black;
+}
+
+
+input[type=text], input[type=text]:focus, input[type=submit], input[type=number] {
+	height:10mm;
+	font-size:5mm;
+        padding: 0;
+	vertical-align: middle; background-color:black; 
+}
+
+
+input[type=submit] { width:10mm;}
+</style>
+<body>
+<canvas style="position:absolute; left:0; top:0; z-index:-1"  id="myCanvas" width="640" height="480"> </canvas>
+<div class="only_full">
+    <input id="search_field_main" class="search_field" autocomplete="off" type="text" value="search" onkeyup="mainSearchDoneCheck(event);" oninput="mainSearchFindTarget(this.value);" onfocus="mainSearchFocus();" onclick="mainSearchFocus();" onfocusout="mainSearchOnFocusChange(false);" onfocusin="mainSearchOnFocusChange(true)" />
+    <button class="incdec_but search_background" id="main_search_button" style="display:none; margin-right:1mm;" onclick="reShearchMain();">&nbsp;</button>
+    <button id="search_field_main_ok" ></button>
+</div>
+<p class="first_line_controls" >
+	<span class="only_full"><button class="ui_but tr" onclick="align();">Align</button></span>
+	<span class="only_tiny"><button class="incdec_but" onclick="align();">&#x25ce;</button></span>
+    <span id="countdown"></span>
+    <span class="only_tiny" id="alignment_tiny"></span><span class="only_full" id="alignment"></span> 
+	<button class="comp_but nocompass_background" id="nocompass_button" style="display:none">&nbsp;</button>
+	<button class="comp_but manual_background" id="hand_button" style="display:none;" onclick="manualMode();">&nbsp;</button>
+	<button class="comp_but compass_background" id="compass_button" style="display:none" onclick="compassMode();">&nbsp;</button>
+</p>
+<p class="first_line_controls only_full_b">
+		<button class="incdec_but" onclick="incFOV();">-</button>
+		<button class="incdec_but" onclick="decFOV();">+</button>
+		&angle;<span class="fov_val">60&deg;</span>
+		<button style="display:inline" class="comp_but settings_background" onclick="showConfig('inline');">&nbsp;</button>
+</p>
+<p class="only_tiny_b first_line_controls"><button class="comp_but settings_background" onclick="showConfig('inline');">&nbsp;</button>
+</p>
+<p class="first_line_controls" style="display:none" id="wl_ctl"><button  class="incdec_but" onclick="watchListItemUpdate(-1);">&lt;</button> <button class="incdec_but" onclick="watchListItemUpdate(1);">&gt;</button><br/><i><span id="wl_target_name"></span></i></p>
+<p class="first_line_controls" style="display:none" id="show_info">
+    <button  class="incdec_but wiki_background" onclick="showObjectInfo();" >&nbsp;</button>
+</p>
+
+<p class="first_line_controls tr" id="gps">No Geolocation</p>
+<div id="object_log" style="display:none">
+<p>Sirius:<span id="Sirius_alt"></span>, <span id="Sirius_az"></span></p>
+<p>Mars:<span id="Mars_alt"></span>, <span id="Mars_az"></span></p>
+<p>Rigel:<span id="Rigel_alt"></span>, <span id="Rigel_az"></span></p>
+<p>Jupiter:<span id="Jupiter_alt"></span>, <span id="Jupiter_az"></span></p>
+</div>
+<p class="first_line_controls" id="orient"></p>
+<p class="first_line_controls" id="status"></p>
+<div class="config_div r2l" id="quick_start" style="display:none; position:absolute; left:10%; top:10%; z-index:4 ; padding: 1% 1% 1% 1%; width: 78%; background:black; border: 1px solid #00bfff ">
+    <span style="position:absolute; right:1mm; top:1mm">
+        <button class="incdec_but" onclick="qsHide()">X</button>
+    </span>
+    <h3 class="tr" style="text-align:center" >Quick Start Guide</h3>
+    <p><input class="dso_selector" id="qs_hide_1" type="checkbox" onchange="showOnStartup(!this.checked,1)" /><label for="qs_hide_1" class="tr" >Don't show on startup</label></p>
+    <div id="qs_1">
+        <p>
+            <button class="ui_but tr" disabled style="color:#800">&lt; Prev</button>
+            <button class="ui_but tr" onclick="qsShowHide(2,1)">Next &gt;</button>
+        
+        </p>

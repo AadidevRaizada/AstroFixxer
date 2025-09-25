@@ -63,14 +63,14 @@ def embed(manual,version):
     urlpng=re.compile(r'^(.*)url\(([a-z0-9_\-]*\.png)\)(.*)$')
     urlpng2=re.compile(r'^(.*<img.*)src="([a-z0-9_\-\/]*\.png)"(.*)$')
     
-    with open("astrofixxer.html","r") as f, open("astrofixxer_deploy.html","w") as out:
+    with open("astrofixxer.html","r",encoding="utf-8") as f, open("astrofixxer_deploy.html","w",encoding="utf-8") as out:
         for line in f.readlines():
             m = script.match(line)
             v = ver.match(line)
             u = urlpng.match(line)
             u2 = urlpng2.match(line)
             if m:
-                with open(m.group(1),"r") as inline:
+                with open(m.group(1),"r",encoding="utf-8") as inline:
                     line = inline.read()
                     out.write('<script>\n')
                     out.write(line)
@@ -108,7 +108,7 @@ def add_ga():
         f.write(page)
 
 def main():
-    create_db()
+    # create_db()  # Skip database creation for deployment
     ver = get_ver()
     manuals = dict()
     manuals["en"] = make_manual()
