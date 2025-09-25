@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "*.html": {
-      "maxDuration": 10
-    }
-  },
   "headers": [
     {
       "source": "/(.*)",
