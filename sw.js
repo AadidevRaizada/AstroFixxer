@@ -1,6 +1,6 @@
 /*
  *
- *  AstroHopper Copyright 2021 Artyom Beilis
+ *  AstroFixxer Copyright 2021 Artyom Beilis
  *
  *  Adopted from AirHorner
  * 
@@ -21,12 +21,12 @@
  */
 
 const version = "VERSION";
-const cacheName = `astrohopper-${version}`;
+const cacheName = `astrofixxer-${version}`;
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(cacheName).then(cache => {
       return cache.addAll([
-        `/astrohopper.html`
+        `/astrofixxer.html`
       ])
       .then(() => self.skipWaiting());
     })
@@ -41,7 +41,7 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(caches.keys().then(function(names) {
       return Promise.all(
             names.filter(function(name) {
-                let delName =  name.startsWith('astrohopper') && name != cacheName;
+                let delName =  name.startsWith('astrofixxer') && name != cacheName;
                 if(delName) {
                     console.log("delete from cache " + name)
                 }

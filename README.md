@@ -1,8 +1,8 @@
-# AstroFixxer - (f.k.a. SkyHopper)
+# AstroFixxer
 
 [TOC]
 
-AstroFixxer (formerly known as SkyHopper) is a web application that helps to find objects across the night sky.
+AstroFixxer is a web application that helps to find objects across the night sky.
 It does this by allowing an accurate hop from a well-known and easily identifiable 
 star to other fainter stars or DSO by measuring changes in pointing angles of the cell phone
 using built in gyroscope and gravity sensors. It is similar to Digital Setting Circles 
@@ -60,7 +60,7 @@ Geolocation (watch for No Geolocation message on screen):
 
 AstroFixxer is a Progressive Web Application. It can be installed as regular application on your smart phone. Once it is installed it is fully accessible offline. You can also run AstroFixxer as a demo on a laptop computer.
 
-In order to install the application, open the URL <https://artyom-beilis.github.io/astrohopper.html> and install it.
+In order to install the application, open the URL <https://artyom-beilis.github.io/astrofixxer.html> and install it.
 
 - Android/Chrome - tap on "..." near the URL, and select "Install App" or "Add to Home Screen" 
 - Samsung Browser - tap on `↓` symbol near URL

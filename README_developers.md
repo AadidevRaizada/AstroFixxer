@@ -1,6 +1,6 @@
 # Developers ReadMe
 
-AstroHopper is deployed as a single static html file that embeds inside
+AstroFixxer is deployed as a single static html file that embeds inside
 all the stars and DSOs data base, all the code and external JS code.
 
 Note: the code does not perform _any_ communications with external world
@@ -18,9 +18,9 @@ Following files are used:
 - `create_data.py` generates jsdb.js - JSON/JavaScript database of all the objects:
   stars, constellations and constellation lines, deep space objects
 - `deploy.py` calls `create_data.py`, converts `README.md` to manual 
-  and embeds all external JS code, PNGs and and manual into single HTML file `astrohopper_deploy.html`
+  and embeds all external JS code, PNGs and and manual into single HTML file `astrofixxer_deploy.html`
 
-  It also generates astrohopper.py - a simple server for development. 
+  It also generates astrofixxer.py - a simple server for development. 
 
 Development cycle:
 
@@ -30,7 +30,7 @@ Development cycle:
 
 # Developers notes:
 
-In order to include new JS code put it into astrohopper.js in following exact format:
+In order to include new JS code put it into astrofixxer.js in following exact format:
 
     <script src="path/to/new/js/file.js"></script>
 

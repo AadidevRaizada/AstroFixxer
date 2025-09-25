@@ -63,7 +63,7 @@ def embed(manual,version):
     urlpng=re.compile(r'^(.*)url\(([a-z0-9_\-]*\.png)\)(.*)$')
     urlpng2=re.compile(r'^(.*<img.*)src="([a-z0-9_\-\/]*\.png)"(.*)$')
     
-    with open("astrohopper.html","r") as f, open("astrohopper_deploy.html","w") as out:
+    with open("astrofixxer.html","r") as f, open("astrofixxer_deploy.html","w") as out:
         for line in f.readlines():
             m = script.match(line)
             v = ver.match(line)
@@ -92,7 +92,7 @@ def embed(manual,version):
                 out.write(line)
 
 def deploy_files(target):
-    copyf('astrohopper_deploy.html',target + "/astrohopper.html");
+    copyf('astrofixxer_deploy.html',target + "/astrofixxer.html");
     copyf('sw_deploy.js',target + "/sw.js");
     for f in ['LICENSE','COPYING.md','manual.html','manifest.json']:
         copyf(f,target+ "/" + f)
@@ -101,10 +101,10 @@ def add_ga():
     print("Adding Google Analytics to the file")
     with open('ga.html') as f:
         cnt=f.read()
-    with open('astrohopper_deploy.html') as f:
+    with open('astrofixxer_deploy.html') as f:
         page = f.read()
     page = page.replace('</head>',cnt + '</head>')
-    with open('astrohopper_deploy.html','w')  as f:
+    with open('astrofixxer_deploy.html','w')  as f:
         f.write(page)
 
 def main():
