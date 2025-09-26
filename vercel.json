@@ -1,9 +1,10 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "python3 create_data_minimal.py",
   "outputDirectory": ".",
   "headers": [
     {
-      "source": "/(.*)\.js",
+      "source": "/(.*)\\.js",
       "headers": [
         {
           "key": "Content-Type",
