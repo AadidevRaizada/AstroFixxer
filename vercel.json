@@ -1,9 +1,9 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "git": {
     "deploymentEnabled": { "main": true }
   },
   "buildCommand": "python3 create_data.py && python3 po/tojson.py",
+  "outputDirectory": ".",
   "headers": [
     {
       "source": "/(.*)\\.js",
