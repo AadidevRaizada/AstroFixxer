@@ -54,17 +54,18 @@ Runtime: Browser/PWA (Service Worker, Web Manifest)
 
 Sensors & Web APIs: DeviceOrientation (gyro, gravity), Geolocation
 
+<img width="1920" height="1080" alt="FRONTEND" src="https://github.com/user-attachments/assets/d55ceea1-7137-40ad-a68a-27a472367d5b" />
+
+
 Astronomy data:
 
 OpenNGC (NGC/IC positions & metadata) — CC-BY-SA-4.0. 
-GitHub
+
 
 VSOP87 (planet ephemerides; multilang JS tables). 
-GitHub
-+1
+
 
 Western Constellations Atlas of Space (constellation lines). 
-GitHub
 
 App architecture: Single-page web app; offline-first; no server required for core use
 
@@ -159,19 +160,19 @@ https://github.com/eleanorlutz/western_constellations_atlas_of_space
 Market/context sources referenced above:
 
 India smartphone users ~659M (June 18, 2025). 
-Exploding Topics
+
 
 Stellarium Mobile Google Play listing (10M+ downloads). 
-Google Play
+
 
 Global/India astrophotography camera market signals (industry research). 
-Dataintelo
-+1
+
 
 License
 
 Please note that upstream AstroHopper is GPL-3.0 and certain datasets carry their own licenses (e.g., OpenNGC CC-BY-SA-4.0). If you redistribute modified bundles, ensure your distribution respects the original licenses. 
 
 Contributing
+
 
 Issues and PRs are welcome—especially for localizations, observing lists tailored to India, and classroom materials.
