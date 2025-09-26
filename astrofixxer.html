@@ -1,64 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE>
+<html>
 <head>
-<title>AstroFixxer - Open-Source Star-Hopping Tracker | Smart India Hackathon 2025</title>
+<title>AstroHopper - Web Application for Sky Navigation</title>
+<link rel="manifest" href="manifest.json">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="description" content="AstroFixxer: Free PWA for star-hopping with any telescope. Turn your smartphone into digital setting circles. Works offline, supports manual Dobsonians. Smart India Hackathon 2025 project.">
-<meta name="keywords" content="astronomy, telescope, star hopping, digital setting circles, PWA, smartphone astronomy, manual telescope, Dobsonian, Smart India Hackathon 2025, space technology, open source">
-<meta name="author" content="AstroFix Team - Smart India Hackathon 2025">
-<meta name="robots" content="index, follow">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://astro-fixxer.vercel.app/astrofixxer.html">
-<meta property="og:title" content="AstroFixxer - Open-Source Star-Hopping Tracker">
-<meta property="og:description" content="Turn your smartphone into digital setting circles for any telescope. Free PWA for accurate star hopping and sky navigation.">
-<meta property="og:image" content="https://astro-fixxer.vercel.app/images/qs_1_1.png">
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://astro-fixxer.vercel.app/astrofixxer.html">
-<meta property="twitter:title" content="AstroFixxer - Open-Source Star-Hopping Tracker">
-<meta property="twitter:description" content="Turn your smartphone into digital setting circles for any telescope. Free PWA for accurate star hopping and sky navigation.">
-<meta property="twitter:image" content="https://astro-fixxer.vercel.app/images/qs_1_1.png">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" sizes="32x32" href="images/qs_1_1.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/qs_1_1.png">
-<link rel="apple-touch-icon" href="images/qs_1_1.png">
-
-<!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00bfff">
-
-<!-- Canonical URL -->
-<link rel="canonical" href="https://astro-fixxer.vercel.app/astrofixxer.html">
-
-<!-- Structured Data -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "AstroFixxer",
-    "description": "Open-source star-hopping tracker that turns your smartphone into digital setting circles for any telescope. Free PWA for accurate sky navigation.",
-    "url": "https://astro-fixxer.vercel.app/astrofixxer.html",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Web Browser, iOS, Android",
-    "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-    },
-    "author": {
-        "@type": "Organization",
-        "name": "AstroFix Team",
-        "description": "Smart India Hackathon 2025 participants"
-    },
-    "datePublished": "2025-01-01",
-    "keywords": "astronomy, telescope, star hopping, digital setting circles, PWA, smartphone astronomy"
-}
-</script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5L31YEPT3E"></script>
 <script>
@@ -483,7 +429,7 @@ input[type=submit] { width:10mm;}
         <input class="dso_selector modern-checkbox" id="align_dso_checked"  type="checkbox" /><label for="align_dso_checked" class="tr" >Align on DSO</label>
     </td>
     <td>
-        <input class="dso_selector modern-checkbox" id="show_star_names_checked"  type="checkbox" checked="checked" onchange="global_show_star_names = this.checked;" /><label for="show_star_names_checked" class="tr" >Star Names</label>
+        <input class="dso_selector" id="show_star_names_checked"  type="checkbox" checked="checked" onchange="global_show_star_names = this.checked;" /><label for="show_star_names_checked" class="tr" >Star Names</label>
     </td>
 </tr>
 <tr>
@@ -801,7 +747,7 @@ Pluto,19:55:16,-22:13:42
 <li>Also the author of the program (Artyom Beilis) is frequent visitor of <a href="https://www.cloudynights.com/index/">Cloudy Nights</a> forum so you can get help there. Make mention the application name correctly "AstroHopper".</li>
 </ul>
 <h2 id="copyrights">Copyrights</h2>
-<p>(C) 2021-2025 Artyom Beilis. AstroFixxer adaptation (C) 2025 AstroFix Team.</p>
+<p>(C) 2021-2025 Artyom Beilis.</p>
 <p>It is an open source web application licensed under GPL license. It may work only with well working sensors. No warranty of any kind is given. For detailed copyrights
 of different parts of the project refer to <a href="https://github.com/artyom-beilis/skyhopper/blob/main/COPYING.md">https://github.com/artyom-beilis/skyhopper/blob/main/COPYING.md</a></p>
 </div>
@@ -10417,7 +10363,7 @@ global_expecting_select = selectTarget;
 
 // AstroGuide Voice Assistant Placeholder
 function activateAstroGuide() {
-    alert('🎤 AstroGuide Voice Assistant\n\nComing Soon!\n\nThis will integrate with our Rasa-powered AI assistant for voice-guided astronomy navigation.\n\n- Voice commands for object search\n- Spoken directions to celestial objects\n- Interactive astronomy guidance\n\nDeveloped by AstroFix Team for Smart India Hackathon 2024');
+    alert('🎤 AstroGuide Voice Assistant\n\nComing Soon!\n\nThis will integrate with our Rasa-powered AI assistant for voice-guided astronomy navigation.\n\n- Voice commands for object search\n- Spoken directions to celestial objects\n- Interactive astronomy guidance\n\nDeveloped by AstroFix Team for Smart India Hackathon 2025');
 }
 
 window.addEventListener("load", () => {
