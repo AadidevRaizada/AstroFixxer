@@ -1,245 +1,177 @@
-# AstroFixxer
+AstroFixxer — Open-Source Star-Hopping Tracker + “AstroGuide” Voice Assistant
 
-[TOC]
+Smart India Hackathon 2025 – Student Innovation (Space Technology)
+Problem Statements: SIH25142, SIH25125
 
-AstroFixxer is a web application that helps to find objects across the night sky.
-It does this by allowing an accurate hop from a well-known and easily identifiable 
-star to other fainter stars or DSO by measuring changes in pointing angles of the cell phone
-using built in gyroscope and gravity sensors. It is similar to Digital Setting Circles 
-implemented in a smart phone.
+A lightweight, phone-mounted star-hopping assistant that turns any telescope into a guided instrument. AstroFixxer is a web app (PWA) you can install on your phone, align on a bright object, and then “hop” to faint targets with precise Alt/Az deltas—augmented by an optional multilingual voice assistant (AstroGuide) for real-time explanations of sky events.
 
-The smart phone must have gyro and gravity sensors and preferably compass.
+1) About our problem statement
 
-AstroFixxer is a web-based application that contains a single HTML page with a JavaScript objects 
-database that will continue working even offline as long as it is cached by the browser.
+Access barrier: Automated star-tracking mounts (GoTo/plate-solving rigs) are expensive, complex, and out of reach for most students and hobbyists in India.
 
-## Operation
+What’s needed: A low-cost, phone-first solution that works offline, guides a manual telescope accurately, and teaches astronomy on the fly—ideal for schools, clubs, and first-time observers.
 
-You attach the cellphone to the telescope such that the physical **top** part of the phone 
-points towards viewing direction. Note this is different from typical sky observing apps
-that simulate camera view of the sky. For AstroFixxer the screen is parallel to the
-viewing direction.
+Why now (market signal): India had ~659 million smartphone users in 2025—an enormous base that can support phone-mounted astronomy tools. Meanwhile, leading stargazing apps like Stellarium Mobile show 10M+ installs globally, underscoring demand for handheld sky-navigation tools. 
 
 
-Before you attach the smartphone, open AstroFixxer application and calibrate the compass using "8" like movements.
-The calibration will significantly improve compass direction accuracy.
-But if your compass fails to work properly, press the hand button `✋` to use Manual Mode.
+2) Our solution (methodology & working)
 
-When AstroFixxer starts, a Quick Start Guide appears.  You can also get help by pressing the gear `⚙` button at upper right and then the `?` button. 
+AstroFixxer adapts the proven AstroHopper approach to deliver accurate star hopping with commodity smartphone sensors—no camera plate solving required.
 
+How it works (field workflow):
 
-1. Align your telescope with an easily identifiable star or a planet near the object you want to observe
-2. Tap on `[Align]` button at top left of screen 
-3. Tap on the star or the planet you selected. A 3 sec timer is started to make sure there is no shaking. After 3 seconds the application is aligned on the selected object. "Aligned" message is shown and a cross appears in the center of the screen showing the viewing direction your telescope on the map.
-4. Tap on an object you want to observe or type its name in the search box in the Settings Menu (accessed via the gear `⚙` button). You will see a line showing the direction you need to move the telescope and the changes in altitude and azimuth are shown at the right and bottom part of the screen
-5. Move the telescope till these numbers are close to zero - at this point your telescope should point to the requested object
-6. In order to move to next object - repeat the alignment process from the step 1 since the built-in cellphone gyros don't keep the accuracy for a long time or multiple movements
+Mount the phone to the telescope with the screen parallel to the tube (not a camera AR view).
 
-Tutorial and Introduction Videos:
+Align once on a bright star/planet near your target. The app records the current pointing using the phone’s gyroscope + gravity sensors (and compass when available).
 
-- Here you can find a demonstration and tutorial video created by Nir Zonshine: <https://youtu.be/AtArqBLWWJ8>
-- Another very good review created by John Dreese (a.k.a. Reflactor) can be found here: <https://youtu.be/6-_58mSGz1Q>
+Pick a target (by tapping or searching). The app computes ∆Alt / ∆Az to nudge the telescope toward the object.
 
-## Notes for iOS Users
+Follow the deltas until they reach ≈0 — you’re on target. Re-align as needed since phone gyros drift over time.
 
-You need to provide some permissions to Safari in order to run AstroFixxer.
+(Optional) AstroGuide answers “What’s up now?” and explains events (e.g., conjunctions, ISS passes) in plain language.
 
-Device Orientation Sensors:
+Under the hood:
 
-- For iOS 13.0 and above you need to allow access to device orientation information by pressing `Enable Device Orientation` button once application loads
-- For iOS 12.2 and before 13 you need to allow access via: _Settings > Safari > Motion and Orientation access_
+Ephemerides: Planets and solar-system bodies from VSOP87 tables. 
 
-Geolocation (watch for No Geolocation message on screen):
 
-- Settings > Privacy > Location Services ON. Then scroll down to "Safari Web..." and check "While Using the app". For iOS 14.0 and above both precise and approximate location should work.
-    
-    Some users reported need for reboot of the device for these changes to take an effect.
+Deep-sky: Object IDs/positions from OpenNGC (NGC/IC). 
 
 
-## Installing AstroFixxer
+Constellations: Line art and metadata from the Western Constellations Atlas dataset. 
 
-AstroFixxer is a Progressive Web Application. It can be installed as regular application on your smart phone. Once it is installed it is fully accessible offline. You can also run AstroFixxer as a demo on a laptop computer.
 
-In order to install the application, open the URL <https://artyom-beilis.github.io/astrofixxer.html> and install it.
+Progressive Web App: Offline cache; runs as a single HTML/JS page. (Approach documented in AstroHopper.) 
 
-- Android/Chrome - tap on "..." near the URL, and select "Install App" or "Add to Home Screen" 
-- Samsung Browser - tap on `↓` symbol near URL
-- Android/Firefox - tap on "..." near the URL, and select "Install"
-- Android/Edge - tap on "..." at the bottom and select "Add to Phone"
-- iPhone/Safari - tap the "Share" button (a square with an arrow pointing up) scroll down and select "Add to Home Screen"
+AstroFixxer is ideal for manual Dobsonians and small refractors where a cheap, robust “digital setting circles” experience is transformative. 
 
-The application will be installed on home screen or in applications screen - depending on browser.
 
-To test if AstroFixxer works offline:
+3) Our technology stack
 
-1. Close all applications/browsers
-2. Put your phone in "Flight/Airplane" mode, make sure WiFi is closed
-3. Tap on application icon and make sure it works.
+Languages: HTML, CSS, JavaScript (vanilla, client-rendered)
 
-You can usually update the installed version of AstroFixxer by refreshing the page. If this does not work for your browser, uninstall it and reinstall from scratch.
+Runtime: Browser/PWA (Service Worker, Web Manifest)
 
-## Troubleshooting 
+Sensors & Web APIs: DeviceOrientation (gyro, gravity), Geolocation
 
--   _The sky in application looks different from what I expect?_
+Astronomy data:
 
-    Make sure your browser provides correct location information. If not "No Geolocation" message will be shown. Check the geographical coordinates in settings menu to make sure they match your location
+OpenNGC (NGC/IC positions & metadata) — CC-BY-SA-4.0. 
+GitHub
 
--   _I move the phone but nothing moves?_
+VSOP87 (planet ephemerides; multilang JS tables). 
+GitHub
++1
 
-    Make sure your cellphone has working sensors. Do SkyMap like applications work for you?
+Western Constellations Atlas of Space (constellation lines). 
+GitHub
 
--   _I move the telescope but only Altitude is changing. Azimuth is pointing to Polaris/North?_
+App architecture: Single-page web app; offline-first; no server required for core use
 
-    Your browser may not support compass heading (for example Firefox) or you don't have such a sensor in the phone. A compass with a line crossing it will be shown.
-    You can adjust azimuth manually by swiping the screen till you get required azimuth and then align.
+Hosting/CI: Vercel (static deploy)
 
--   _I pointed my telescope to a star but the cell phone seems to point to a different direction?_
+Planned add-ons:
 
-    The compass of the cell phone may be significantly misaligned you may to do following:
+AstroGuide (Rasa Open Source) for multilingual voice queries & function-calling to app APIs
 
-    1. Move your cell phone in compass calibration/waving pattern to increase compass accuracy
-    2. Increase application's field of view by pressing `+` at the top left corner near value `∠60°` - default FOV.
-    3. You may switch to manual azimuth mode by pressing "hand" `✋` icon at the right side and adjust the azimuth manually
+3D-printed phone mount kit and alignment jig
 
--   _The screen becomes dim very fast and I don't have time to align/point the telescope?_
+4) Market feasibility
 
-    Modify the "sleep" settings for the cell phone. It is under "Settings -> Display" in Android and "Settings -> Display and Brightness -> Auto-Lock” in IOS
+Open source core, paid hardware add-on. We will keep AstroFixxer free & open with extensive docs and lesson plans. Revenue comes from 3D-printed kits (phone mount, balancing ring, finder bracket) and optional classroom packs.
 
--   _I start moving the telescope to modify azimuth direction but according to the application it stopped moving, or going back - behaves strangely?_
+Demand proxies:
 
-    It seems that gyro lost accuracy. It happens. Try again. If it still happens all the time and you can't reach the target. Try one of following:
+India’s smartphone base (~659M users in 2025) provides a massive reachable audience for phone-mounted astronomy utilities. 
 
-    1. Select an alignment point that is closer on its azimuth to target object - altitude has much more accurate tracking.
-    2. Correct altitude first and then search for the object on azimuth axis 
 
--   _Pinch gesture zooms the entire web page instead of changing the field of view of the sky map_
+Leading mobile planetariums demonstrate multi-million installs (e.g., Stellarium Mobile 10M+ on Google Play), indicating strong hobbyist interest. 
 
-    It related to configuration:
 
-    - Chrome: settings ->accessibility -> enable force zoom -> off
-    - Firefox:settings -> accessibility -> always enable zoom -> off
-    - Samsung Browser: settings ->appearance -> manual zoom -> off
-    - Edge: settings -> font size -> zoom on all sites -> off or settings -> Accessibility -> zoom on all websites -> off
+Global reports project steady growth for astrophotography gear markets, implying rising amateur participation (directional indicator; source: industry research). 
 
-    Unfortunately, there is no option to disable full web page zoom on iOS.
 
-## Controls
+⚠️ Note on Indian counts: Hard numbers for “how many Indians do astronomy/astrophotography” are not officially tracked. We therefore use conservative proxies (smartphone reach, app installs, equipment market growth) to justify feasibility. Where possible, we will augment with primary metrics (downloads by region, school/club adoption, kit sales).
 
-- Left side, from top to bottom:
+5) Impact & benefits
 
-    - Align button and status - pressing on it starts alignment process - you need to select a star or planet you aligning on to.
-    - Field of view - modify with `+`, `-` to adjust 
-    - If watch list is selected `<`,`>` controls for browsing watch list object. Selected object name is shown below
+Education at scale: Brings practical sky-navigation to schools & clubs without buying GoTo mounts.
 
-- Right side, from top to bottom, right to left
+Inclusion: Works offline, supports multilingual voice (planned), and runs on low-cost Android devices.
 
-    - `⚙` - settings button
-    - Object search box, allows to enter object name or code. Once found press Enter on keyboard. Note if you want to do same search once again, press on the "Magnifing Glass" and it would return to the selected object.
-    - `✋` - switch to manual mode, "_compass_" switch to compass mode, "_compass crossed_" - no compass available use manual mode only
-    - `W` - appears when a named object selected - pressing on it opens Wikipedia page about the object, requires network.
+Skill building: Teaches celestial coordinate systems, star hopping, and observing technique—not just “tap to GoTo.”
 
-- Settings Menu (accessed from gear `⚙` icon):
+Community: Open data and open code encourage contributions, localizations, and new observing lists tailored to India’s skies.
 
-    - `↻` button - reset alignment and target
-    - Small UI Mode - optimize for small screen: make buttons smaller, move field of view controls to settings menu
-    - Full Screen - switch application to full screen
-    - Night Mode - enable or disable red-night mode screen
-    - In "Small Screen Mode" only: Field of view - modify with `+`, `-` to adjust 
-    - Maximum star magnitude to display/align on - adjust with `+`, `-` controls
-    - Maximum apparent magnitude of DSO objects to be displayed - modify with `+`, `-` controls
-    - Font size increase option to allow bigger fonts if needed
-    - Watch List selection and editing 
-    - Search target by name field
-    - Allow alignment using any DSO object. Use with care since it is hard to define a center of big DSO object like open cluster.
-    - Filtering of the Astronomical objects by type
-    - Enable/Disable pinch zoom
-    - Wiki information configuration
-    - Show quick-start tutorial on startup 
-    - User Added Objects List
-    - Status of geolocation and reload geolocation button
-    - Sensors information
+Sustainability: Simple phone mount + manual scopes extends the life of existing equipment rather than replacing it.
 
+Quick start
 
-## Controls in Small Screen Mode
+Open the deployed app: https://astro-fixxer.vercel.app/astrofixxer.html
 
-On screen controls:
+Tap Install (PWA) in your browser to add it to your home screen.
 
-- Left Top: `◎` - Align button with status: `✓` - aligned, `✗` - not aligned, `?` - select alignment star
-- If watch list is selected, on the left `<`,`>` controls for browsing watch list object. Selected object name is shown below
-- Right:
+Grant location and motion sensor access (required for alignment).
 
-    - Manual `✋` or "_compass_" mode
-    - Settings Menu: `⚙`
+Align on a bright object, select a target, and follow the Alt/Az deltas to zero.
 
-- Left `W` - appears when a named object selected - pressing on it opens Wikipedia page about the object, requires network
+iOS tip: since iOS 13, motion sensors require a user gesture to enable; if you see “No Gyro”, tap the on-screen button to grant access. (Behavior documented in the AstroHopper readme.) 
 
-## Wikipedia Page Info
 
-When `W` button appears you can tap on it and open a frame with Wikipedia page about the selected object.
+Roadmap
 
-_Note:_ But be careful - the app has no control over style of the page and by default it would be black text over white page. It is something not desirable for night vision. To improve this, you can tweak your browser settings or use a specific browser extension such as [Dark Reader](https://darkreader.org), however white text or bright images may still disturb your night vision.
+ Rasa-powered AstroGuide (Hindi/English first)
 
-Thus by default the Wiki page info support is disabled in Night mode. You can change behavior in settings menu "Wiki".
+ In-app “What’s up tonight?” events feed (conjunctions, ISS passes, meteor showers)
 
-## Watch List
+ Guided school lesson plans & printable worksheets
 
-A user can create a custom watch list in advance to browse them easily during the night.
-There is `List` option in "Settings" menu.  It has  `[edit]` control to open watch list editing tool.
+ 3D-printed kit: STL files + BOM + vendor links
 
-A watch list is defined by a simple list of object names separated by space, new lines or commas. 
-For example below the "default" list:
+ Accessibility: high-contrast mode, screen-reader hints
 
-    M411, M47, M49, M50, M44, M45
+Citations & credits
 
-Several named lists can be defined by giving watch list a name followed by `:`, for example:
+We stand on the shoulders of excellent open-source work:
 
-    clusters: M41 M47 M49
-     M50 M44 M45
-    doublestars: Polaris, "Cor Caroli"
+AstroHopper by Artyom Beilis — core method (“digital setting circles” via smartphone gyroscope/gravity) and PWA architecture. Licensed GPL-3.0.
 
-It is possible to add user comment between `(` and `)` to explain the object id. It would be shown in UI upon object selection, for example:
+GitHub: https://github.com/artyom-beilis/skyhopper
 
-    Galaxies: M31 (Andromeda), M64 (Black Eye)
+App page: https://artyom-beilis.github.io/astrohopper.html
 
-_Note:_ if you adding a comment or use a name that contains spaces you need to add a comma `,` as a separator
 
-Lists can be selected by pressing `<` and `>` buttons in "Lists" control. When the list is selected two buttons `<` and `>` are shown in main screen under "Align" button. They allow browsing the objects forward and backward. The current selected object's name is shown under the controls.
+OpenNGC — NGC/IC database (CC-BY-SA-4.0) by Mattia Verga, built from NED, HyperLEDA, SIMBAD, HEASARC, etc.
 
-The watch lists are stored at your phone on per domain basis. They are kept even when you reopen the app. 
+https://github.com/mattiaverga/OpenNGC
 
-## User Objects
 
-This application does not contain every possible star or DSO. If you want to access objects that are not listed in the database you can add them via "User Objects" in settings menu.
+VSOP87-multilang — planetary ephemerides tables/code by Greg Miller and contributors.
 
-User object are defined in CSV format when first column contains object name, second right ascension (RA) and the third the declination (DEC).
-Both RA and DEC can be given as decimal degrees (0-360 for RA and -90 +90 for DEC) or in hour/degree with minutes and seconds. Seconds may be omitted. Fields can be separated by spaces, by ":" or by appropriate symbols like "h", "m", "s", "d". For example 
+https://github.com/gmiller123456/vsop87-multilang
 
-- RA: `170.6358` or `11:22:32.6` or `11h 22m 32.6s` or `11h 22' 32.6''` or `11 22′ 32.6″` or  `11 22 32.6`, `11:32`
-- DEC: `-87.3757` or `-87:22:32.6` or `-87d 22m 32.6s` or `-87d 22' 32.6''` or `-87° 22′ 32.6″` or `-87 22 32.6`, `-87:22`
 
-This is an example of such a list:
+Western Constellations Atlas of Space — constellations line data & workflow by Eleanor Lutz.
 
-    V1405,23h 24m 48s, +61° 11′ 15″
-    Pluto,19:55:16,-22:13:42
+https://github.com/eleanorlutz/western_constellations_atlas_of_space
 
-The user objects are stored on your phone on per domain basis. They are kept even when you reopen the app. 
 
+Market/context sources referenced above:
 
-## Equatorial Mount Users
+India smartphone users ~659M (June 18, 2025). 
+Exploding Topics
 
-The application assumes you work with alt-azimuth mount. If you are using equatorial mount an additional error may be introduced due to misalignment between the cell phone major axis and the telescope axis.
+Stellarium Mobile Google Play listing (10M+ downloads). 
+Google Play
 
-If the targets are close to poles and significant changes in right ascension are required for the hop any misalignment error between cell phone axis and telescope axis will affect the accuracy. Final error can be calculated as 2e⋅sin(Δα/2)⋅sin(δ), where e - misalignment error between cell phone and telescope, Δα - change in right ascension required for the hop and δ - declination of the target.
+Global/India astrophotography camera market signals (industry research). 
+Dataintelo
++1
 
-So it may not work reliably for equatorial mounts. Alt-Az mounts are recommended.
+License
 
-## Known Issues
+Please note that upstream AstroHopper is GPL-3.0 and certain datasets carry their own licenses (e.g., OpenNGC CC-BY-SA-4.0). If you redistribute modified bundles, ensure your distribution respects the original licenses. 
 
-- Pinch zoom does not work properly on iOS - no way to disable browser zoom
-- Pinch zoom or double tap on iOS devices zooms the screen when not supposed to
-- On some iPad versions (iOS 12.5) the star/target selection does not work
+Contributing
 
-
-
-
-
+Issues and PRs are welcome—especially for localizations, observing lists tailored to India, and classroom materials.

@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Main pages
+Allow: /index.html
+Allow: /astrofixxer.html
+Allow: /astroguide.html
+
+# Assets
+Allow: /images/
+Allow: /manifest.json
+
+# Disallow development files
+Disallow: /create_data.py
+Disallow: /deploy.py
+Disallow: /test_server.py
+Disallow: /pyserver.py
+
+# Sitemap
+Sitemap: https://astro-fixxer.vercel.app/sitemap.xml
